@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -11,11 +12,34 @@ namespace BTX2
 	{
 		public App ()
 		{
-			InitializeComponent();
+            SetupDB();
 
-			MainPage = new BTX2.MainPage();
+            InitializeComponent();
+
+            //MainPage = new BTX2.MainPage();
+            SetMainPage();
 		}
-
+        public static void SetupDB()
+        {
+            Config.Instance.dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "BTXdb.db3");
+        }
+		public static void SetMainPage()
+		{
+            Current.MainPage = new TabbedPage
+            {
+                Children =
+                {
+                    new NavigationPage(new ChartsPage())
+                    {
+                        Title = "Charts"
+                    },
+                    new NavigationPage(new SongsPage())
+                    {
+                        Title = "Songs"
+                    },
+                }
+            };
+        }
 		protected override void OnStart ()
 		{
 			// Handle when your app starts
