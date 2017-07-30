@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BTX2.ChartViewCell">
+    <ViewCell.ContextActions>
+        <MenuItem Text="Favorite" Clicked="OnChartFavorite" CommandParameter="{Binding .}"/>
+        <MenuItem Text="Hide" Clicked="OnChartHide" CommandParameter="{Binding .}"/>
+    </ViewCell.ContextActions>
+    <ViewCell.View>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15"></RowDefinition>
+                <RowDefinition Height="15"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="ChartNumber"  Text="{Binding ChartNumber}" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="ChartTitle"  Text="{Binding ChartTitle}"  TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="0" x:Name="Favorite"  Text="{Binding Favorite}" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" x:Name="ChartURL" Text="{Binding ChartURL}" TextColor="Gray" FontSize="10" VerticalTextAlignment="Center"/>
+        </Grid>
+    </ViewCell.View>
+</ViewCell>

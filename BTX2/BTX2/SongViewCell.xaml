@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BTX2.SongViewCell">
+    <ViewCell.View>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15"></RowDefinition>
+                <RowDefinition Height="15"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"></ColumnDefinition>
+                <ColumnDefinition Width="25"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="Position" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="PrevRank" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="2" x:Name="Title" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="0" x:Name="PeakPosition" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" x:Name="WeeksOnChart" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="2" x:Name="Artist" TextColor="Navy" FontSize="10" VerticalTextAlignment="Center"/>
+            <!--<Label Grid.Row="0" Grid.Column="0" x:Name="Position"  Text="{Binding Position}" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="PrevRank"  Text="{Binding PrevRank}"  TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="2" x:Name="Title"  Text="{Binding Title}"  TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="0" x:Name="PeakPosition"  Text="{Binding PeakPosition}" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" x:Name="WeeksOnChart"  Text="{Binding WeeksOnChart}"  TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="2" x:Name="Artist" Text="{Binding Artist}" TextColor="Navy" FontSize="10" VerticalTextAlignment="Center"/>-->
+        </Grid>
+    </ViewCell.View>
+</ViewCell>

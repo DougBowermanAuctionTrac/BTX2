@@ -13,6 +13,7 @@ namespace BTX2
 		public App ()
 		{
             SetupDB();
+            SetupBillboardURL();
 
             InitializeComponent();
 
@@ -23,17 +24,23 @@ namespace BTX2
         {
             Config.Instance.dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "BTXdb.db3");
         }
+        public static void SetupBillboardURL()
+        {
+            Config.Instance.BillboardChartsURL = "http://www.billboard.com/charts";
+        }
 		public static void SetMainPage()
 		{
+            SongPage CurSongPage = new SongPage();
+            
             Current.MainPage = new TabbedPage
             {
                 Children =
                 {
-                    new NavigationPage(new ChartsPage())
+                    new NavigationPage(new ChartPage(CurSongPage))
                     {
                         Title = "Charts"
                     },
-                    new NavigationPage(new SongsPage())
+                    new NavigationPage(CurSongPage)
                     {
                         Title = "Songs"
                     },

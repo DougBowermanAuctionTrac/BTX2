@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BTX2"
+             x:Class="BTX2.ChartPage"
+             Title="Charts">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Text="Vis" Priority="0" Clicked="OnVisClick" />
+        <ToolbarItem Name="MenuItem2" Order="Primary" Text="Fav" Priority="1" Clicked="OnFavClick" />
+        <ToolbarItem Name="MenuItem3" Order="Primary" Text="All" Priority="2" Clicked="OnAllClick" />
+    </ContentPage.ToolbarItems>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Fill">
+        <ListView x:Name="listView" ItemSelected="OnItemSelected" ItemsSource="{Binding ChartObsCol}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:ChartViewCell />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

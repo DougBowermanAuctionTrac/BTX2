@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTX2.Service
 {
@@ -46,7 +47,7 @@ namespace BTX2.Service
             string baseUrl = wholeUri.ToString();
 
             // Create an HTTP web request using the URL:
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(wholeUri);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(Config.Instance.BillboardChartsURL));
             request.ContentType = "application/json";
             request.Method = "GET";
 
@@ -78,7 +79,7 @@ namespace BTX2.Service
                     CategoryFieldEnd = Line.IndexOf("</");
                     CurrentChartCategory = Line.Substring(CategoryFieldStart, CategoryFieldEnd - CategoryFieldStart);
                 }
-                if (Line.IndexOf("<span class=\"field-content\">") > 0)
+                if ((Line.Contains("<span class=\"field-content\">")) || (Line.Contains("<span class=\"field-content\">")))
                 {
                     ChartTagStart = Line.IndexOf(ChartTag);
                     ChartTagEnd = Line.IndexOf("\">", ChartTagStart);
@@ -123,20 +124,20 @@ namespace BTX2.Service
             // Covers All and anything else
             return AllCharts;
         }
-        public void ChartUpdate(Chart curChart)
+        public void ChartUpdate(Chart CurChart)
         {
-            Chart dstChart = AllCharts.FirstOrDefault(x => x.ChartNumber == curChart.ChartNumber);
-            if (dstChart != null)
+            Chart DstChart = AllCharts.FirstOrDefault(x => x.ChartNumber == CurChart.ChartNumber);
+            if (DstChart != null)
             {
-                dstChart.Favorite = curChart.Favorite;
-                dstChart.Hide = curChart.Hide;
-                ChartDBUpdate(dstChart);
+                DstChart.Favorite = CurChart.Favorite;
+                DstChart.Hide = CurChart.Hide;
+                ChartDBUpdate(DstChart);
             }
         }
-        private void ChartDBUpdate(Chart curChart)
+        private void ChartDBUpdate(Chart CurChart)
         {
             SQLiteConnection db = new SQLiteConnection(Config.Instance.dbPath);
-            db.Update(curChart);
+            db.Update(CurChart);
             db.Close();
         }
     }
