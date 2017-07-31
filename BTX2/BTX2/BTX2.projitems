@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ChartViewCell.xaml.cs">
       <DependentUpon>ChartViewCell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Service\SongInfoService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SongInfoPage.xaml.cs">
       <DependentUpon>SongInfoPage.xaml</DependentUpon>
     </Compile>

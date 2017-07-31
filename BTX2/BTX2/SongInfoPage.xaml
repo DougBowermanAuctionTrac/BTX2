@@ -19,7 +19,10 @@
             <Label x:Name="WeeksOnChartLabel" Text="Artist" TextColor="Navy" FontSize="12"/>
 
             <Label x:Name="SongInfo" Text="Song Info Here!" />
-            <Button x:Name="GotoGooglePlayMusic" Clicked="OnGotoGPMClicked" Text="Go To Google Play Music" />
+            <!--<Button x:Name="GotoGooglePlayMusic" Clicked="OnGotoGPMClicked" Text="Go To Google Play Music" />-->
+            <!-- WebView needs to be given height and width request within layouts to render. -->
+            <WebView x:Name="webView" WidthRequest="1000" HeightRequest="1000" />
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,4 +1,5 @@
 ﻿using BTX2.Model;
+using BTX2.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,11 @@ namespace BTX2
 	public partial class SongInfoPage : ContentPage
 	{
         Song CurSong;
+        SongInfoService SongInfoSvc;
 		public SongInfoPage (Song SelSong)
 		{
             CurSong = SelSong;
+            SongInfoSvc = new SongInfoService();
 			InitializeComponent ();
 		}
 
@@ -38,8 +41,11 @@ namespace BTX2
             WeeksOnChartLabel.Text = CurSong.WeeksOnChart.ToString();
             String SongArtistTitle;
             SongArtistTitle = CurSong.Artist + " " + CurSong.Title;
-            SongInfo.Text = "https://play.google.com/music/listen#/sr/" + WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+'));
-
+            string VideoID = SongInfoSvc.GetFirstYouTubeSearchResult(WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+')));
+            string YouTubeSearchResult = "https://m.youtube.com" + "/watch?v=" + VideoID;
+            SongInfo.Text = YouTubeSearchResult;
+            //SongInfo.Text = "https://play.google.com/music/listen#/sr/" + WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+'));
+            webView.Source = YouTubeSearchResult;
         }
 	}
 }
