@@ -42,7 +42,10 @@ namespace BTX2
             String SongArtistTitle;
             SongArtistTitle = CurSong.Artist + " " + CurSong.Title;
             string VideoID = SongInfoSvc.GetFirstYouTubeSearchResult(WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+')));
-            string YouTubeSearchResult = "https://m.youtube.com" + "/watch?v=" + VideoID;
+            string YouTubeSearchResult = "https://m.youtube.com";
+            if (VideoID != "") {
+                YouTubeSearchResult = YouTubeSearchResult + "/watch?v=" + VideoID;
+            }
             SongInfo.Text = YouTubeSearchResult;
             //SongInfo.Text = "https://play.google.com/music/listen#/sr/" + WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+'));
             webView.Source = YouTubeSearchResult;
