@@ -32,7 +32,7 @@ namespace BTX2
         {
             if (e.SelectedItem == null) return; // has been set to null, do not 'process' tapped event
             Chart SelChart = (Chart)e.SelectedItem;
-            AppSongPage.LoadChart(SelChart.ChartURL, SelChart.LastUpdatedDateTimeString);
+            AppSongPage.LoadChart(SelChart.ChartURL, SelChart.LastUpdatedDateTimeString, SelChart.ChartTitle);
             MessagingCenter.Send<ChartPage>(this, "ChartSelected");
             ((ListView)sender).SelectedItem = null; // de-select the row
         }

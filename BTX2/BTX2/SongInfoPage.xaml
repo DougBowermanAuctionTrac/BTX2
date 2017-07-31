@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BTX2.SongInfoPage"
+             Title="Song Info">
+    <ContentPage.Content>
+        <StackLayout Margin="5">
+            <Label Text="Title" TextColor="Black" FontSize="10"/>
+            <Label x:Name="TitleLabel" Text="Title" TextColor="Navy" FontSize="12"/>
+            <Label Text="Artist" TextColor="Black" FontSize="10"/>
+            <Label x:Name="ArtistLabel" Text="Artist" TextColor="Navy" FontSize="12"/>
+            <Label Text="Current Rank" TextColor="Black" FontSize="10"/>
+            <Label x:Name="CurrentRankLabel" Text="Artist" TextColor="Navy" FontSize="12"/>
+            <Label Text="Previous Rank" TextColor="Black" FontSize="10"/>
+            <Label x:Name="PrevRankLabel" Text="Artist" TextColor="Navy" FontSize="12"/>
+            <Label Text="Peak Position" TextColor="Black" FontSize="10"/>
+            <Label x:Name="PeakPositionLabel" Text="Artist" TextColor="Navy" FontSize="12"/>
+            <Label Text="Weeks On Chart" TextColor="Black" FontSize="10"/>
+            <Label x:Name="WeeksOnChartLabel" Text="Artist" TextColor="Navy" FontSize="12"/>
+
+            <Label x:Name="SongInfo" Text="Song Info Here!" />
+            <Button x:Name="GotoGooglePlayMusic" Clicked="OnGotoGPMClicked" Text="Go To Google Play Music" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

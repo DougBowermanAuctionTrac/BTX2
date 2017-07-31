@@ -1,4 +1,5 @@
-﻿using BTX2.ViewModel;
+﻿using BTX2.Model;
+using BTX2.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +29,15 @@ namespace BTX2
         public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null) return; // has been set to null, do not 'process' tapped event
-            //Chart SelChart = (Chart)e.SelectedItem;
-            //AppSongPage.ChartURL = SelChart.ChartURL;
-            //SongsPage.ChartURL = SelChart.ChartURL;
-            //ChartDB.Instance.SetCurSelectedChart(selChart.ChartNumber);
-            //SongDB.Instance.FillFromURL(selChart.ChartURL);
+            Song SelSong = (Song)e.SelectedItem;
+            this.Navigation.PushAsync (new SongInfoPage (SelSong));
             MessagingCenter.Send<SongPage>(this, "SongSelected");
             ((ListView)sender).SelectedItem = null; // de-select the row
         }
 
-        public void LoadChart(string SelChartURL, string LastUpdatedDateTime)
+        public void LoadChart(string SelChartURL, string LastUpdatedDateTime, string ChartTitle)
         {
+            ChartTitleLabel.Text = ChartTitle;
             myViewModel.ChartURL = SelChartURL;
             myViewModel.LastUpdatedDateTime = LastUpdatedDateTime;
             myViewModel.LoadSongCommand.Execute(null);
