@@ -71,6 +71,18 @@ namespace BTX2.ViewModel
         public void ChartUpdate(Chart CurChart)
         {
             ChartSvc.ChartUpdate(CurChart);
+            for (int i = 0; i < ChartObsCol.Count; i++)
+            {
+                if (ChartObsCol[i].ChartNumber == CurChart.ChartNumber)
+                {
+                    ChartObsCol[i].Favorite = CurChart.Favorite;
+                    ChartObsCol[i].Hide = CurChart.Hide;
+                    OnPropertyChanged("ChartObsCol");
+                    OnPropertyChanged("Favorite");
+                    OnPropertyChanged("Hide");
+                    break;
+                }
+            }
         }
         protected virtual void OnPropertyChanged(string PropertyName)
         {

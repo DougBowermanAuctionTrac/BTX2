@@ -1,4 +1,5 @@
 ﻿using BTX2.Model;
+using BTX2.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,14 @@ namespace BTX2
             {
                 ChartNumber.Text = ChartBC.ChartNumber.ToString();
                 ChartTitle.Text = ChartBC.ChartTitle;
-                Favorite.Text = ChartBC.Favorite.ToString();
+                FavHide.Text = (ChartBC.Favorite == 0 ? "*" : "F") + "|" + (ChartBC.Hide == 0 ? "V" : "H");
                 ChartURL.Text = ChartBC.ChartURL;
             }
             else
             {
                 ChartNumber.Text = "";
                 ChartTitle.Text = "";
-                Favorite.Text = "";
+                FavHide.Text = "";
                 ChartURL.Text = "";
             }
         }
@@ -41,15 +42,11 @@ namespace BTX2
         {
             MenuItem curMenuItem = (MenuItem)sender;
             Chart SelChart = (Chart)curMenuItem.CommandParameter;
+            ChartViewModel curViewModel = (ChartViewModel)this.Parent.BindingContext;
             if (SelChart != null) {
-                ChartPage Parent = (ChartPage)this.Parent;
-                Parent.SetChartFav(SelChart);
-                //var db = new SQLiteConnection(Config.Instance.dbPath);
-                //if (curSelectedChart.Favorite == 0)
-                //    curSelectedChart.Favorite = 1;
-                //else
-                //    curSelectedChart.Favorite = 0;
-                //db.Update(curSelectedChart);
+                //ParentPage.SetChartFav(SelChart);
+                SelChart.Favorite = (SelChart.Favorite == 1 ? 0 : 1);
+                curViewModel.ChartUpdate(SelChart);
             }
             MessagingCenter.Send<ChartViewCell>(this, "ChartUpdated");
         }
@@ -57,15 +54,11 @@ namespace BTX2
         {
             MenuItem curMenuItem = (MenuItem)sender;
             Chart SelChart = (Chart)curMenuItem.CommandParameter;
+            ChartViewModel curViewModel = (ChartViewModel)this.Parent.BindingContext;
             if (SelChart != null) {
-                ChartPage Parent = (ChartPage)this.Parent;
-                Parent.SetChartHide(SelChart);
-                //var db = new SQLiteConnection(Config.Instance.dbPath);
-                //if (curSelectedChart.Hide == 0)
-                //    curSelectedChart.Hide = 1;
-                //else
-                //    curSelectedChart.Hide = 0;
-                //db.Update(curSelectedChart);
+                //ParentPage.SetChartHide(SelChart);
+                SelChart.Hide = (SelChart.Hide == 1 ? 0 : 1);
+                curViewModel.ChartUpdate(SelChart);
             }
             MessagingCenter.Send<ChartViewCell>(this, "ChartUpdated");
 
