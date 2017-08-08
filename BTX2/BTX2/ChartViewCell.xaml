@@ -16,10 +16,10 @@
                 <ColumnDefinition Width="20"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" x:Name="ChartNumber" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
-            <Label Grid.Row="0" Grid.Column="1" x:Name="ChartTitle" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="0" x:Name="FavHide" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="1" x:Name="ChartURL" TextColor="Gray" FontSize="10" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="ChartNumber" Text="{Binding ChartNumber}" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="ChartTitle" Text="{Binding ChartTitle}" TextColor="Navy" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="0" x:Name="FavHide" Text="{Binding FavHide}" TextColor="Gray" FontSize="12" VerticalTextAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" x:Name="ChartURL" Text="{Binding ChartURL}" TextColor="Gray" FontSize="10" VerticalTextAlignment="Center"/>
         </Grid>
     </ViewCell.View>
 </ViewCell>

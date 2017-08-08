@@ -33,6 +33,8 @@ namespace BTX2.Service
             else
             {
                 foreach (var c in table) {
+                    //c.FavHide = c.Favorite.ToString() + "|" + c.Hide.ToString();
+
                     AllCharts.Add(c);
                 }
             }
@@ -94,6 +96,7 @@ namespace BTX2.Service
                     NewChart.ChartTitle = WebUtility.HtmlDecode(ChartTitle);
                     NewChart.Favorite = 0;
                     NewChart.Hide = 0;
+                    //NewChart.FavHide = "0|0";
                     AllCharts.Add(NewChart);
                     ChartNumber++;
                 }
@@ -107,6 +110,8 @@ namespace BTX2.Service
             db.Query<Chart>("DELETE FROM Chart");
             foreach (Chart curChart in AllCharts)
             {
+                //curChart.FavHide = curChart.Favorite.ToString() + "|" + curChart.Hide.ToString();
+
                 db.Insert (curChart);
             }
 
@@ -131,6 +136,7 @@ namespace BTX2.Service
             {
                 DstChart.Favorite = CurChart.Favorite;
                 DstChart.Hide = CurChart.Hide;
+                //DstChart.FavHide = CurChart.Favorite.ToString() + "|" + CurChart.Hide.ToString();
                 ChartDBUpdate(DstChart);
             }
         }

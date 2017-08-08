@@ -27,6 +27,7 @@ namespace BTX2
                             new Binding("IsBusy", BindingMode.OneWay));
             listView.SetBinding(ListView.RefreshCommandProperty, new Binding("LoadChartCommand"));
             
+            
 		}
         public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

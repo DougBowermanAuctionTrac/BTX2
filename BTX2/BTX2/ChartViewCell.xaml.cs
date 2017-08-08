@@ -18,25 +18,25 @@ namespace BTX2
 		{
 			InitializeComponent ();
 		}
-        protected override void OnBindingContextChanged()
-        {
-            base.OnBindingContextChanged();
-            var ChartBC = BindingContext as Chart;
-            if (ChartBC != null)
-            {
-                ChartNumber.Text = ChartBC.ChartNumber.ToString();
-                ChartTitle.Text = ChartBC.ChartTitle;
-                FavHide.Text = (ChartBC.Favorite == 0 ? "*" : "F") + "|" + (ChartBC.Hide == 0 ? "V" : "H");
-                ChartURL.Text = ChartBC.ChartURL;
-            }
-            else
-            {
-                ChartNumber.Text = "";
-                ChartTitle.Text = "";
-                FavHide.Text = "";
-                ChartURL.Text = "";
-            }
-        }
+        //protected override void OnBindingContextChanged()
+        //{
+        //    base.OnBindingContextChanged();
+        //    var ChartBC = BindingContext as Chart;
+        //    if (ChartBC != null)
+        //    {
+        //        ChartNumber.Text = ChartBC.ChartNumber.ToString();
+        //        ChartTitle.Text = ChartBC.ChartTitle;
+        //        FavHide.Text = (ChartBC.Favorite == 0 ? "*" : "F") + "|" + (ChartBC.Hide == 0 ? "V" : "H");
+        //        ChartURL.Text = ChartBC.ChartURL;
+        //    }
+        //    else
+        //    {
+        //        ChartNumber.Text = "";
+        //        ChartTitle.Text = "";
+        //        FavHide.Text = "";
+        //        ChartURL.Text = "";
+        //    }
+        //}
 
         public void OnChartFavorite (object sender, EventArgs e)
         {
@@ -46,6 +46,8 @@ namespace BTX2
             if (SelChart != null) {
                 //ParentPage.SetChartFav(SelChart);
                 SelChart.Favorite = (SelChart.Favorite == 1 ? 0 : 1);
+                //SelChart.FavHide = SelChart.Favorite.ToString() + "|" + SelChart.Hide.ToString();
+
                 curViewModel.ChartUpdate(SelChart);
             }
             MessagingCenter.Send<ChartViewCell>(this, "ChartUpdated");
@@ -58,6 +60,8 @@ namespace BTX2
             if (SelChart != null) {
                 //ParentPage.SetChartHide(SelChart);
                 SelChart.Hide = (SelChart.Hide == 1 ? 0 : 1);
+                //SelChart.FavHide = SelChart.Favorite.ToString() + "|" + SelChart.Hide.ToString();
+
                 curViewModel.ChartUpdate(SelChart);
             }
             MessagingCenter.Send<ChartViewCell>(this, "ChartUpdated");
