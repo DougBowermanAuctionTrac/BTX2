@@ -18,7 +18,7 @@ namespace BTX2.Service
         {
          
         }
-        public string GetFirstYouTubeSearchResult(string SearchString)
+        public string GetFirstYouTubeSearchResult(string SearchString, string BearerToken)
         {
             string YouTubeSearchURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1";
             YouTubeSearchURL = YouTubeSearchURL + "&q=" + SearchString + "&key=AIzaSyB6xylSo9qhmTyyUtuF28OCOtcZPZMb_7o";
@@ -29,6 +29,7 @@ namespace BTX2.Service
                 // Create an HTTP web request using the URL:
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(YouTubeSearchURL));
                 request.ContentType = "application/json";
+                request.Headers.Add("Authorization: Bearer " + BearerToken);
                 request.Method = "GET";
 
                 //// Send the request to the server and wait for the response:

@@ -12,12 +12,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)AuthenticationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChartPage.xaml.cs">
       <DependentUpon>ChartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ChartViewCell.xaml.cs">
       <DependentUpon>ChartViewCell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\SongInfoService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SongInfoPage.xaml.cs">
       <DependentUpon>SongInfoPage.xaml</DependentUpon>
@@ -33,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Song.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\ChartService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\SongService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ChartViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SongViewModel.cs" />
   </ItemGroup>

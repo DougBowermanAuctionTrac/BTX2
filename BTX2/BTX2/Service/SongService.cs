@@ -241,95 +241,113 @@ namespace BTX2.Service
         private void FillCurSongsFromBillboardURL(string ChartURL, ref List<Song> CurSongs)
         {
             CurSongs.Clear();
-
-            // From Web
-            HtmlWeb web = new HtmlWeb();
-            web.UserAgent = "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko";
-            HtmlDocument doc = web.Load(ChartURL);
-
-            int SongNum = 1;
-            HtmlNode titlenode = doc.DocumentNode.SelectSingleNode("//head/title");
-            string pagetitle = titlenode.InnerText;
-
-            HtmlNodeCollection chartrowarticlenodes = doc.DocumentNode.SelectNodes("//article[contains(@class, 'chart-row')]");
-                
-            foreach (HtmlNode node in chartrowarticlenodes)
+            try
             {
-                var curweeknode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__rank')]");
-                var songnode = node.SelectSingleNode(".//h2[contains(@class, 'chart-row__song')]");
-                var artistnode = node.SelectSingleNode(".//a[contains(@class, 'chart-row__artist')]");
-                var lastweeknode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__last-week')]");
-                var topspotnode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__top-spot')]");
-                var weeksonchartnode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__weeks-on-chart')]");
-                
-                Song mySong = new Song();
-                mySong.ChartURL = ChartURL;
-                mySong.Position = SongNum;
-                mySong.CurrentRank = SongNum;
-                mySong.PreviousRank = 0;
-                mySong.PeakPosition = 0;
-                mySong.WeeksOnChart = 0;
+                // From Web
+                HtmlWeb web = new HtmlWeb();
+                web.UserAgent = "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko";
+                HtmlDocument doc = web.Load(ChartURL);
 
-                mySong.Title = WebUtility.HtmlDecode(songnode.InnerText);
-                mySong.Artist = WebUtility.HtmlDecode(artistnode.InnerText);
+                int SongNum = 1;
+                HtmlNode titlenode = doc.DocumentNode.SelectSingleNode("//head/title");
+                string pagetitle = titlenode.InnerText;
 
-                var curweekchildnodes = curweeknode.ChildNodes;
-                foreach(var curweekchildnode in curweekchildnodes)
+                HtmlNodeCollection chartrowarticlenodes = doc.DocumentNode.SelectNodes("//article[contains(@class, 'chart-row')]");
+
+                foreach (HtmlNode node in chartrowarticlenodes)
                 {
-                    if (curweekchildnode.OuterHtml.Contains("chart-row__current-week"))
+                    var curweeknode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__rank')]");
+                    var songnode = node.SelectSingleNode(".//h2[contains(@class, 'chart-row__song')]");
+                    var artistnode = node.SelectSingleNode(".//a[contains(@class, 'chart-row__artist')]");
+                    var lastweeknode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__last-week')]");
+                    var topspotnode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__top-spot')]");
+                    var weeksonchartnode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__weeks-on-chart')]");
+
+                    Song mySong = new Song();
+                    mySong.Title = "";
+                    mySong.Artist = "";
+                    mySong.ChartURL = ChartURL;
+                    mySong.Position = SongNum;
+                    mySong.CurrentRank = SongNum;
+                    mySong.PreviousRank = 0;
+                    mySong.PeakPosition = 0;
+                    mySong.WeeksOnChart = 0;
+                    
+                    if (songnode != null)
+                        mySong.Title = WebUtility.HtmlDecode(songnode.InnerText.Replace("\n", ""));
+                    if (artistnode != null)
+                        mySong.Artist = WebUtility.HtmlDecode(artistnode.InnerText.Replace("\n", ""));
+
+                    var curweekchildnodes = curweeknode.ChildNodes;
+                    if (curweekchildnodes != null)
+                    foreach (var curweekchildnode in curweekchildnodes)
                     {
-                        try { mySong.CurrentRank = Int32.Parse(curweekchildnode.InnerText); break;  }
-                        catch (Exception AnyException)
+                        if (curweekchildnode == null) break;
+                        if (curweekchildnode.OuterHtml.Contains("chart-row__current-week"))
                         {
-                            Debug.WriteLine(AnyException.Message);
-                            break;
+                            try { mySong.CurrentRank = Int32.Parse(curweekchildnode.InnerText); break; }
+                            catch (Exception AnyException)
+                            {
+                                Debug.WriteLine(AnyException.Message);
+                                break;
+                            }
                         }
                     }
-                }
 
-                var lastweekchildnodes = lastweeknode.ChildNodes;
-                foreach(var lastweekchildnode in lastweekchildnodes)
-                {
-                    if (lastweekchildnode.OuterHtml.Contains("chart-row__value"))
+                    var lastweekchildnodes = lastweeknode.ChildNodes;
+                    if (lastweekchildnodes != null)
+                    foreach (var lastweekchildnode in lastweekchildnodes)
                     {
-                        try { mySong.PreviousRank = Int32.Parse(lastweekchildnode.InnerText); break; }
-                        catch (Exception AnyException)
+                        if (lastweekchildnode == null) break;
+                        if (lastweekchildnode.OuterHtml.Contains("chart-row__value"))
                         {
-                            Debug.WriteLine(AnyException.Message);
-                            break;
+                            try { mySong.PreviousRank = Int32.Parse(lastweekchildnode.InnerText); break; }
+                            catch (Exception AnyException)
+                            {
+                                Debug.WriteLine(AnyException.Message);
+                                break;
+                            }
                         }
                     }
-                }
 
-                var topspotchildnodes = topspotnode.ChildNodes;
-                foreach(var topspotchildnode in topspotchildnodes)
-                {
-                    if (topspotchildnode.OuterHtml.Contains("chart-row__value"))
+                    var topspotchildnodes = topspotnode.ChildNodes;
+                    if (topspotchildnodes != null)
+                    foreach (var topspotchildnode in topspotchildnodes)
                     {
-                        try { mySong.PeakPosition = Int32.Parse(topspotchildnode.InnerText); break; }
-                        catch (Exception AnyException)
+                        if (topspotchildnode == null) break;
+                        if (topspotchildnode.OuterHtml.Contains("chart-row__value"))
                         {
-                            Debug.WriteLine(AnyException.Message);
-                            break;
+                            try { mySong.PeakPosition = Int32.Parse(topspotchildnode.InnerText); break; }
+                            catch (Exception AnyException)
+                            {
+                                Debug.WriteLine(AnyException.Message);
+                                break;
+                            }
                         }
                     }
-                }
 
-                var weeksonchartchildnodes = weeksonchartnode.ChildNodes;
-                foreach(var weeksonchartchildnode in weeksonchartchildnodes)
-                {
-                    if (weeksonchartchildnode.OuterHtml.Contains("chart-row__value"))
+                    var weeksonchartchildnodes = weeksonchartnode.ChildNodes;
+                    if (weeksonchartchildnodes != null)
+                    foreach (var weeksonchartchildnode in weeksonchartchildnodes)
                     {
-                        try { mySong.WeeksOnChart = Int32.Parse(weeksonchartchildnode.InnerText); break; }
-                        catch (Exception AnyException)
+                        if (weeksonchartchildnode == null) break;
+                        if (weeksonchartchildnode.OuterHtml.Contains("chart-row__value"))
                         {
-                            Debug.WriteLine(AnyException.Message);
-                            break;
+                            try { mySong.WeeksOnChart = Int32.Parse(weeksonchartchildnode.InnerText); break; }
+                            catch (Exception AnyException)
+                            {
+                                Debug.WriteLine(AnyException.Message);
+                                break;
+                            }
                         }
                     }
+                    CurSongs.Add(mySong);
+                    SongNum++;
                 }
-                CurSongs.Add(mySong);
-                SongNum++;
+            }
+            catch (Exception AnyException)
+            {
+                Debug.WriteLine(AnyException.Message);
             }
         }
 

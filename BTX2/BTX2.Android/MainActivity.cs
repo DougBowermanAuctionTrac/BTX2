@@ -20,6 +20,8 @@ namespace BTX2.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
+   			global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
+
 			LoadApplication (new BTX2.App ());
 		}
 	}

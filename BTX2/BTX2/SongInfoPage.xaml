@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BTX2.SongInfoPage"
              Title="Song Info">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Text="G Login" Priority="0" Clicked="OnGLoginClick" />
+    </ContentPage.ToolbarItems>    
     <ContentPage.Content>
         <StackLayout Margin="5">
             <Label Text="Title" TextColor="Black" FontSize="10"/>
