@@ -80,9 +80,9 @@ namespace BTX2.ViewModel
                     //ChartObsCol[i].FavHide = CurChart.Favorite.ToString() + "|" + CurChart.Hide.ToString();
 
                     OnPropertyChanged("ChartObsCol");
-                    OnPropertyChanged("Favorite");
-                    OnPropertyChanged("Hide");
-                    OnPropertyChanged("FavHide");
+                    //OnPropertyChanged("Favorite");
+                    //OnPropertyChanged("Hide");
+                    //OnPropertyChanged("FavHide");
                     break;
                 }
             }
