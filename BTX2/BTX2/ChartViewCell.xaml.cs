@@ -65,7 +65,19 @@ namespace BTX2
                 curViewModel.ChartUpdate(SelChart);
             }
             MessagingCenter.Send<ChartViewCell>(this, "ChartUpdated");
+        }
+        public void OnChartUpdate (object sender, EventArgs e)
+        {
+            MenuItem curMenuItem = (MenuItem)sender;
+            Chart SelChart = (Chart)curMenuItem.CommandParameter;
+            ChartViewModel curViewModel = (ChartViewModel)this.Parent.BindingContext;
+            if (SelChart != null) {
+                SelChart.LastUpdatedDateTimeString = "";
+                curViewModel.ChartUpdate(SelChart);
+                //curViewModel.LoadChart(SelChart.ChartURL, SelChart.LastUpdatedDateTimeString, SelChart.ChartTitle);
 
+            }
+            MessagingCenter.Send<ChartViewCell>(this, "ChartUpdated");
         }
 
 	}

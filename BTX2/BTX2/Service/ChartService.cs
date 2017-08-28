@@ -1,4 +1,5 @@
 ﻿using BTX2.Model;
+using HtmlAgilityPack;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,84 @@ namespace BTX2.Service
 
         }
         public void FillAllChartsFromBillboard()
+        {
+            string ChartCategory = "";
+            string ChartLink = "";
+            int CategoryNum;
+            int ChartNum;
+            //var doc = new HtmlDocument();
+            //doc.Load("D:\\Downloads\\curl_754_0\\bbcharts2.html");
+
+            //// From String
+            //var doc = new HtmlDocument();
+            //doc.LoadHtml(html);
+
+            // From Web
+            var url = Config.Instance.BillboardChartsURL;
+            var web = new HtmlWeb();
+            web.UserAgent = "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko";
+            var doc = web.Load(url);
+
+            CategoryNum = 0;
+            ChartNum = 0;
+
+            var titlenode = doc.DocumentNode.SelectSingleNode("//head/title");
+            string ChartTitle = titlenode.InnerText;
+
+            //var usertextnodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'usertext-body')]");
+            HtmlNode articlenode = doc.DocumentNode.SelectSingleNode("//article");
+                
+            foreach (HtmlNode node in articlenode.Descendants())
+            {
+                if (node.Id.StartsWith("id-chart-category")) {
+                    CategoryNum++;
+                    ChartCategory = node.InnerText;
+                    //outputFile.WriteLine(ChartCategory);
+                    //WriteInsomniaFolder(InsommniaBillboardCharts, CategoryNum, ChartCategory);
+
+                }
+                foreach (var attrib in node.Attributes)
+                {
+                    if (attrib.Name == "class")
+                    {
+                        if (attrib.Value.StartsWith("views-row"))
+                        {
+                            ChartLink = "";
+                            foreach(HtmlNode rowNode in node.Descendants())
+                            {
+                                if ((rowNode.Name == "a") && (ChartLink == ""))
+                                {
+                                    ChartNum++;
+                                    foreach (var rowAttrib in rowNode.Attributes)
+                                    {
+                                        if (rowAttrib.Name == "href")
+                                        {
+                                            ChartLink = rowAttrib.Value;
+                                            break;
+                                        }
+                                    }
+                                    Chart NewChart = new Chart();
+                                    NewChart.ChartNumber = ChartNum;
+                                    NewChart.LastUpdatedDateTimeString = "";
+                                    NewChart.ChartCategory = ChartCategory;
+                                    NewChart.ChartURL = Config.Instance.BillboardChartsURL + ChartLink;
+                                    NewChart.ChartTitle = WebUtility.HtmlDecode(ChartTitle);
+                                    NewChart.Favorite = 0;
+                                    NewChart.Hide = 0;
+                                    //NewChart.FavHide = "0|0";
+                                    AllCharts.Add(NewChart);
+
+                                    //outputFile.WriteLine("http://www.billboard.com" + ChartLink + ":" + WebUtility.HtmlDecode(rowNode.InnerText));
+                                    //WriteInsomniaRequest(InsommniaBillboardCharts, CategoryNum, ChartNum, WebUtility.HtmlDecode(rowNode.InnerText), ChartLink);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // done reading charts
+        }
+        public void FillAllChartsFromBillboardOLD()
         {
             UriBuilder myBuilder = new UriBuilder(Config.Instance.BillboardChartsURL);
             myBuilder.Path = String.Empty;

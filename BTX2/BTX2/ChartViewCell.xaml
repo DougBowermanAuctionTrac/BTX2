@@ -5,6 +5,7 @@
     <ViewCell.ContextActions>
         <MenuItem Text="Favorite" Clicked="OnChartFavorite" CommandParameter="{Binding .}"/>
         <MenuItem Text="Hide" Clicked="OnChartHide" CommandParameter="{Binding .}"/>
+        <MenuItem Text="Update" Clicked="OnChartUpdate" CommandParameter="{Binding .}"/>
     </ViewCell.ContextActions>
     <ViewCell.View>
         <Grid Margin="5">
