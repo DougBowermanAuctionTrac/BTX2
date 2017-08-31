@@ -42,13 +42,22 @@ namespace BTX2.Service
             db.Close();
 
         }
+        private void ReloadChartsTable()
+        {
+            AllCharts.Clear();
+            SQLiteConnection db = new SQLiteConnection(Config.Instance.dbPath);
+            db.CreateTable<Chart>();
+            FillAllChartsFromBillboard();
+            FillChartsTableWithAllCharts(db);
+            db.Close();
+        }
         public void FillAllChartsFromBillboard()
         {
             string ChartCategory = "";
             string ChartLink = "";
             string ChartURL = "";
             int CategoryNum = 0;
-            int ChartNumber = 0;
+            int ChartNum = 0;
             //var doc = new HtmlDocument();
             //doc.Load("D:\\Downloads\\curl_754_0\\bbcharts2.html");
 
@@ -88,7 +97,7 @@ namespace BTX2.Service
                             {
                                 if ((rowNode.Name == "a") && (ChartLink == ""))
                                 {
-                                    ChartNumber++;
+                                    ChartNum++;
                                     foreach (var rowAttrib in rowNode.Attributes)
                                     {
                                         if (rowAttrib.Name == "href")
@@ -98,11 +107,11 @@ namespace BTX2.Service
                                         }
                                     }
 									Chart NewChart = new Chart();
-									NewChart.ChartNumber  ChartNumber;
+									NewChart.ChartNumber = ChartNum;
 									NewChart.LastUpdatedDateTimeString = "";
 									NewChart.ChartCategory = ChartCategory;
 									NewChart.ChartURL = ChartURL;
-									NewChart.ChartTitle = WebUtility.HtmlDecode(ChartTitle);
+									NewChart.ChartTitle = WebUtility.HtmlDecode(rowNode.InnerText);
 									NewChart.Favorite = 0;
 									NewChart.Hide = 0;
 									//NewChart.FavHide = "0|0";
@@ -200,6 +209,10 @@ namespace BTX2.Service
             else if (Filter == "Vis")
             {
                 return AllCharts.Where(v => v.Hide == 0).ToList();
+            }
+            else if (Filter == "Reload")
+            {
+                ReloadChartsTable();
             }
             // Covers All and anything else
             return AllCharts;

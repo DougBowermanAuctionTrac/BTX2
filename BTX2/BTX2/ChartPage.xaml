@@ -8,6 +8,7 @@
         <ToolbarItem Name="MenuItem1" Order="Primary" Text="Vis" Priority="0" Clicked="OnVisClick" />
         <ToolbarItem Name="MenuItem2" Order="Primary" Text="Fav" Priority="1" Clicked="OnFavClick" />
         <ToolbarItem Name="MenuItem3" Order="Primary" Text="All" Priority="2" Clicked="OnAllClick" />
+        <ToolbarItem Name="MenuItem4" Order="Primary" Text="Reload" Priority="3" Clicked="OnReloadClick" />
     </ContentPage.ToolbarItems>
     <StackLayout HorizontalOptions="Center" VerticalOptions="Fill">
         <ListView x:Name="listView" ItemSelected="OnItemSelected" ItemsSource="{Binding ChartObsCol}">
