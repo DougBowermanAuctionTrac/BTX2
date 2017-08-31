@@ -1,4 +1,5 @@
 ﻿using BTX2.Model;
+using HtmlAgilityPack;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,80 @@ namespace BTX2.Service
 
         }
         public void FillAllChartsFromBillboard()
+        {
+            string ChartCategory = "";
+            string ChartLink = "";
+            string ChartURL = "";
+            int CategoryNum = 0;
+            int ChartNumber = 0;
+            //var doc = new HtmlDocument();
+            //doc.Load("D:\\Downloads\\curl_754_0\\bbcharts2.html");
+
+            //// From String
+            //var doc = new HtmlDocument();
+            //doc.LoadHtml(html);
+
+            // From Web
+            var url = "http://www.billboard.com/charts";
+            var web = new HtmlWeb();
+            web.UserAgent = "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko";
+            var doc = web.Load(url);
+            
+            var titlenode = doc.DocumentNode.SelectSingleNode("//head/title");
+            string pagetitle = titlenode.InnerText;
+
+            //var usertextnodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'usertext-body')]");
+            HtmlNode articlenode;
+            articlenode = doc.DocumentNode.SelectSingleNode("//main");
+            if (articlenode == null) 
+                articlenode = doc.DocumentNode.SelectSingleNode("//article");
+                
+            foreach (HtmlNode node in articlenode.Descendants())
+            {
+                if (node.Id.StartsWith("id-chart-category")) {
+                    CategoryNum++;
+                    ChartCategory = node.InnerText;
+                }
+                foreach (var attrib in node.Attributes)
+                {
+                    if (attrib.Name == "class")
+                    {
+                        if ((attrib.Value.StartsWith("views-row")) || (attrib.Value.StartsWith("chart-row__charttitle")))
+                        {
+                            ChartLink = "";
+                            foreach(HtmlNode rowNode in node.Descendants())
+                            {
+                                if ((rowNode.Name == "a") && (ChartLink == ""))
+                                {
+                                    ChartNumber++;
+                                    foreach (var rowAttrib in rowNode.Attributes)
+                                    {
+                                        if (rowAttrib.Name == "href")
+                                        {
+                                            ChartURL = "http://www.billboard.com" + rowAttrib.Value;
+                                            break;
+                                        }
+                                    }
+									Chart NewChart = new Chart();
+									NewChart.ChartNumber  ChartNumber;
+									NewChart.LastUpdatedDateTimeString = "";
+									NewChart.ChartCategory = ChartCategory;
+									NewChart.ChartURL = ChartURL;
+									NewChart.ChartTitle = WebUtility.HtmlDecode(ChartTitle);
+									NewChart.Favorite = 0;
+									NewChart.Hide = 0;
+									//NewChart.FavHide = "0|0";
+									AllCharts.Add(NewChart);
+                                }
+                            }
+                        }
+                    }
+                }
+//                    outputFile.WriteLine(node.InnerText);
+            }
+        }
+		
+        public void FillAllChartsFromBillboardOLD()
         {
             UriBuilder myBuilder = new UriBuilder(Config.Instance.BillboardChartsURL);
             myBuilder.Path = String.Empty;
