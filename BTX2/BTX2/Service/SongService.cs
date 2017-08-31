@@ -39,6 +39,10 @@ namespace BTX2.Service
             List<Song> CurSongs = new List<Song>();
             CurSongs = AllSongs.Where(x => x.ChartURL == ChartURL).ToList();
 
+            if (LastUpdatedDateTime == "")
+            {
+                LastUpdatedDateTime = "1900-01-01";
+            }
             DateTime LastUpdated;
             if (DateTime.TryParse(LastUpdatedDateTime, out LastUpdated))
             {
@@ -259,6 +263,8 @@ namespace BTX2.Service
                     var curweeknode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__rank')]");
                     var songnode = node.SelectSingleNode(".//h2[contains(@class, 'chart-row__song')]");
                     var artistnode = node.SelectSingleNode(".//a[contains(@class, 'chart-row__artist')]");
+                    if (artistnode == null) 
+                        artistnode = node.SelectSingleNode(".//span[contains(@class, 'chart-row__artist')]");
                     var lastweeknode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__last-week')]");
                     var topspotnode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__top-spot')]");
                     var weeksonchartnode = node.SelectSingleNode(".//div[contains(@class, 'chart-row__weeks-on-chart')]");
@@ -274,9 +280,9 @@ namespace BTX2.Service
                     mySong.WeeksOnChart = 0;
                     
                     if (songnode != null)
-                        mySong.Title = WebUtility.HtmlDecode(songnode.InnerText.Replace("\n", ""));
+                        mySong.Title = WebUtility.HtmlDecode(songnode.InnerText.Replace("\r", "").Replace("\n", ""));
                     if (artistnode != null)
-                        mySong.Artist = WebUtility.HtmlDecode(artistnode.InnerText.Replace("\n", ""));
+                        mySong.Artist = WebUtility.HtmlDecode(artistnode.InnerText.Replace("\r", "").Replace("\n", ""));
 
                     var curweekchildnodes = curweeknode.ChildNodes;
                     if (curweekchildnodes != null)

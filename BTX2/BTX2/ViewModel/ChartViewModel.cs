@@ -75,6 +75,7 @@ namespace BTX2.ViewModel
             {
                 if (ChartObsCol[i].ChartNumber == CurChart.ChartNumber)
                 {
+                    ChartObsCol[i].LastUpdatedDateTimeString = CurChart.LastUpdatedDateTimeString;
                     ChartObsCol[i].Favorite = CurChart.Favorite;
                     ChartObsCol[i].Hide = CurChart.Hide;
                     //ChartObsCol[i].FavHide = CurChart.Favorite.ToString() + "|" + CurChart.Hide.ToString();

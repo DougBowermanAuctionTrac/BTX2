@@ -122,6 +122,7 @@ namespace BTX2
         protected override void OnAppearing()
 		{
 			base.OnAppearing();
+            string token = account.Properties ["access_token"];
 
             TitleLabel.Text = CurSong.Title;
             ArtistLabel.Text = CurSong.Artist;
@@ -131,7 +132,7 @@ namespace BTX2
             WeeksOnChartLabel.Text = CurSong.WeeksOnChart.ToString();
             String SongArtistTitle;
             SongArtistTitle = CurSong.Artist + " " + CurSong.Title;
-            string VideoID = SongInfoSvc.GetFirstYouTubeSearchResult(WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+')), "asdf");
+            string VideoID = SongInfoSvc.GetFirstYouTubeSearchResult(WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+')), token);
             string YouTubeSearchResult = "https://m.youtube.com";
             if (VideoID != "") {
                 YouTubeSearchResult = YouTubeSearchResult + "/watch?v=" + VideoID;
