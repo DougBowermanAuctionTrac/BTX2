@@ -26,8 +26,6 @@ namespace BTX2
             listView.SetBinding(ListView.IsRefreshingProperty,
                             new Binding("IsBusy", BindingMode.OneWay));
             listView.SetBinding(ListView.RefreshCommandProperty, new Binding("LoadChartCommand"));
-            
-            
 		}
         public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
@@ -50,6 +48,11 @@ namespace BTX2
         public void OnVisClick (Object sender,EventArgs e)
         {
             myViewModel.ChartFilter = "Vis";
+            myViewModel.LoadChartCommand.Execute(sender);
+        }
+        public void OnReloadClick (Object sender,EventArgs e)
+        {
+            myViewModel.ChartFilter = "Reload";
             myViewModel.LoadChartCommand.Execute(sender);
         }
         public void SetChartFav(Chart SelChart)
