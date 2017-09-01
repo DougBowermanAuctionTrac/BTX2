@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 using Xamarin.Forms;
 
 namespace BTX2
@@ -50,6 +52,8 @@ namespace BTX2
 		protected override void OnStart ()
 		{
 			// Handle when your app starts
+                    MobileCenter.Start("android=d088e7de-5cd1-41ee-a623-66c735d5c787;",
+                   typeof(Analytics), typeof(Crashes));
 		}
 
 		protected override void OnSleep ()
