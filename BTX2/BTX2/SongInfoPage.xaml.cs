@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 
 namespace BTX2
 {
@@ -132,7 +135,11 @@ namespace BTX2
             WeeksOnChartLabel.Text = CurSong.WeeksOnChart.ToString();
             String SongArtistTitle;
             SongArtistTitle = CurSong.Artist + " " + CurSong.Title;
-            string VideoID = SongInfoSvc.GetFirstYouTubeSearchResult(WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+')), token);
+            String SearchString = WebUtility.HtmlEncode(SongArtistTitle.Replace(' ', '+'));
+            Analytics.TrackEvent("Video Search", new Dictionary<string, string> {
+                { "SearchString", SearchString }
+            });
+            string VideoID = SongInfoSvc.GetFirstYouTubeSearchResult(SearchString, token);
             string YouTubeSearchResult = "https://m.youtube.com";
             if (VideoID != "") {
                 YouTubeSearchResult = YouTubeSearchResult + "/watch?v=" + VideoID;
